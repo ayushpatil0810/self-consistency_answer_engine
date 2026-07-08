@@ -86,7 +86,7 @@ export function SettingsModal({ isOpen, onClose, config, onSave }: SettingsModal
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-[var(--navy-main)]">Model (Optional)</label>
+                <label className="text-xs font-bold uppercase text-[var(--navy-main)]">Model</label>
                 <input 
                   type="text" 
                   name="openaiModel"
@@ -126,7 +126,7 @@ export function SettingsModal({ isOpen, onClose, config, onSave }: SettingsModal
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-[var(--navy-main)]">Model (Optional)</label>
+                <label className="text-xs font-bold uppercase text-[var(--navy-main)]">Model</label>
                 <input 
                   type="text" 
                   name="claudeModel"
@@ -166,7 +166,7 @@ export function SettingsModal({ isOpen, onClose, config, onSave }: SettingsModal
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-[var(--navy-main)]">Model (Optional)</label>
+                <label className="text-xs font-bold uppercase text-[var(--navy-main)]">Model</label>
                 <input 
                   type="text" 
                   name="grokModel"
@@ -206,7 +206,7 @@ export function SettingsModal({ isOpen, onClose, config, onSave }: SettingsModal
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-[var(--navy-main)]">Model (Optional)</label>
+                <label className="text-xs font-bold uppercase text-[var(--navy-main)]">Model</label>
                 <input 
                   type="text" 
                   name="geminiModel"

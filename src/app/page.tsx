@@ -157,12 +157,22 @@ export default function Home() {
               We consult three distinct models: OpenAI, Grok, and Gemini, and weave their insights into a singular, masterfully crafted response.
             </p>
             
-            <div className="bg-[var(--teal-main)]/10 border-l-4 border-[var(--teal-main)] p-4 text-left rounded-r-lg max-w-2xl mx-auto flex items-start gap-3">
-              <RiSettings3Line className="w-6 h-6 text-[var(--teal-main)] shrink-0 mt-0.5" />
-              <p className="text-sm font-bold text-[var(--navy-main)]">
-                Hey, just a heads up: you need to add your own API keys in the <button onClick={() => setIsSettingsOpen(true)} className="underline hover:text-[var(--orange-accent)] transition-colors">settings</button> (top right) to use this app. 
-                Don't worry, your keys are stored strictly in your browser's local storage. If you have trust issues like me, you can <a href="<github repo link>" target="_blank" rel="noreferrer" className="underline hover:text-[var(--orange-accent)] transition-colors">check the code here</a>.
-              </p>
+            <div className="bg-[var(--teal-main)]/10 border-l-4 border-[var(--teal-main)] p-4 md:p-5 text-left rounded-r-lg max-w-2xl mx-auto flex items-start gap-4">
+              <RiSettings3Line className="w-6 h-6 text-[var(--teal-main)] shrink-0 mt-1" />
+              <div className="space-y-2">
+                <p className="text-sm font-bold text-[var(--navy-main)]">Hey, just a heads up before you start:</p>
+                <ul className="text-sm font-semibold text-[var(--navy-main)]/90 space-y-1.5 list-disc list-inside">
+                  <li>
+                    Add your API keys in the <button onClick={() => setIsSettingsOpen(true)} className="underline font-bold text-[var(--teal-main)] hover:text-[var(--orange-accent)] transition-colors">Settings</button> (top right) to use this app.
+                  </li>
+                  <li>
+                    <strong>Privacy First:</strong> Your keys are strictly stored in your browser's local storage. If you have trust issues like me, <a href="<github repo link>" target="_blank" rel="noreferrer" className="underline font-bold text-[var(--teal-main)] hover:text-[var(--orange-accent)] transition-colors">check the code here</a>.
+                  </li>
+                  <li>
+                    <strong>Complete Flexibility:</strong> It's not compulsory to use the actual models (OpenAI, Grok, etc.). Any OpenAI SDK-compatible API (like DeepSeek, Ollama, vLLM) will work perfectly fine. Just enter the compatible Base URL and Model name!
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 

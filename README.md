@@ -13,6 +13,7 @@ Real Fiesta is a powerful, retro-modern GenAI web application that leverages the
 Real Fiesta is designed with a **Bring Your Own Key** architecture. 
 - You do not need a centralized backend filled with paid API keys. 
 - You can simply click the **Settings** cog in the top right corner of the application to enter your own API Keys, custom Base URLs, and specific Model names.
+- **Flexibility**: You are not required to use the actual providers (OpenAI, Anthropic, X.ai, Google). Because the engine uses the OpenAI SDK format under the hood, **any OpenAI-compatible API** (such as DeepSeek, local models via Ollama or vLLM, Together AI, etc.) will work perfectly fine. Just plug in the compatible Base URL, API Key, and Model name.
 - **Privacy First**: All keys entered via the UI are stored securely in your browser's `localStorage`. They are never stored in a database, ensuring maximum security and trust.
 
 ## Tech Stack
