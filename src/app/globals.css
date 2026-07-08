@@ -1,26 +1,58 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream-bg: #f4ebd0;
+  --color-teal-main: #0f768b;
+  --color-teal-hover: #0c6173;
+  --color-navy-main: #0f2a41;
+  --color-navy-hover: #0b1f31;
+  --color-orange-accent: #df6c35;
+
+  --color-background: var(--cream-bg);
+  --color-foreground: var(--navy-main);
+  
+  --font-sans: var(--font-sans);
+  
+  /* Overrides for typical UI elements if using Shadcn components */
+  --color-primary: var(--teal-main);
+  --color-primary-foreground: oklch(1 0 0); /* White */
+  --color-secondary: var(--navy-main);
+  --color-secondary-foreground: var(--cream-bg);
+  --color-border: var(--navy-main);
+  --color-input: var(--navy-main);
+  --color-ring: var(--teal-main);
+  --color-muted: color-mix(in srgb, var(--cream-bg) 80%, var(--navy-main));
+  --color-muted-foreground: color-mix(in srgb, var(--navy-main) 70%, transparent);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --cream-bg: #f4ebd0;
+  --teal-main: #0f768b;
+  --navy-main: #0f2a41;
+  --orange-accent: #df6c35;
+  
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-[var(--cream-bg)] text-[var(--navy-main)];
+  }
+  html {
+    @apply font-sans;
+  }
 }
