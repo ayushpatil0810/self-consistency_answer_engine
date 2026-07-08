@@ -1,20 +1,24 @@
 import OpenAI from "openai";
-import { ModelResponse } from "../types/models";
+import { ModelResponse, CustomConfig } from "../types/models";
 import { measureLatency } from "../utils/latency";
 import { withTimeout } from "../utils/timeout";
 
-const grokClient = new OpenAI({
+const globalGrokClient = new OpenAI({
   apiKey: process.env.GROK_API_KEY || "dummy_key",
   baseURL: process.env.GROK_BASE_URL,
 });
 
-export async function generateGrokResponse(prompt: string): Promise<ModelResponse> {
-  const modelName = process.env.GROK_MODEL || "grok-beta";
+export async function generateGrokResponse(prompt: string, config?: CustomConfig): Promise<ModelResponse> {
+  const modelName = config?.grokModel || process.env.GROK_MODEL || "grok-beta";
+
+  const client = config?.grokKey
+    ? new OpenAI({ apiKey: config.grokKey, baseURL: config.grokUrl || undefined })
+    : globalGrokClient;
 
   try {
     const { result, latency } = await measureLatency(() =>
       withTimeout(
-        grokClient.chat.completions.create({
+        client.chat.completions.create({
           model: modelName,
           messages: [
             {

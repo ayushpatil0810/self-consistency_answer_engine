@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { 
@@ -13,9 +13,11 @@ import {
   RiErrorWarningLine,
   RiTimeLine,
   RiDatabase2Line,
-  RiSearchLine
+  RiSearchLine,
+  RiSettings3Line
 } from "@remixicon/react";
-import { ModelResponse } from "@/lib/types/models";
+import { ModelResponse, CustomConfig } from "@/lib/types/models";
+import { SettingsModal } from "@/components/settings-modal";
 
 const getIconForModel = (model: string) => {
   switch (model.toLowerCase()) {
@@ -43,6 +45,24 @@ export default function Home() {
     responses: ModelResponse[];
     final: string;
   } | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [config, setConfig] = useState<CustomConfig>({});
+
+  useEffect(() => {
+    const savedConfig = localStorage.getItem("real_fiesta_config");
+    if (savedConfig) {
+      try {
+        setConfig(JSON.parse(savedConfig));
+      } catch (err) {
+        console.error("Failed to parse config from local storage", err);
+      }
+    }
+  }, []);
+
+  const handleSaveConfig = (newConfig: CustomConfig) => {
+    setConfig(newConfig);
+    localStorage.setItem("real_fiesta_config", JSON.stringify(newConfig));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +76,7 @@ export default function Home() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt, config }),
       });
 
       if (!res.ok) {
@@ -111,6 +131,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[var(--cream-bg)] text-[var(--navy-main)] font-sans selection:bg-[var(--teal-main)] selection:text-white pb-24">
+      <button
+        onClick={() => setIsSettingsOpen(true)}
+        className="fixed top-6 right-6 w-12 h-12 rounded-full bg-[var(--cream-bg)] border-4 border-[var(--navy-main)] flex items-center justify-center text-[var(--navy-main)] hover:bg-[var(--teal-main)] hover:text-white transition-colors z-40 shadow-[4px_4px_0_0_var(--navy-main)]"
+        title="Settings"
+      >
+        <RiSettings3Line className="w-6 h-6" />
+      </button>
+
+      <SettingsModal 
+        isOpen={isSettingsOpen} 
+        onClose={() => setIsSettingsOpen(false)} 
+        config={config} 
+        onSave={handleSaveConfig} 
+      />
 
       <main className="max-w-6xl mx-auto px-6 md:px-12 py-16 space-y-24">
         {/* HERO SECTION */}
@@ -122,6 +156,14 @@ export default function Home() {
             <p className="text-lg md:text-xl text-[var(--navy-main)] font-semibold max-w-2xl mx-auto leading-relaxed">
               We consult three distinct models: OpenAI, Grok, and Gemini, and weave their insights into a singular, masterfully crafted response.
             </p>
+            
+            <div className="bg-[var(--teal-main)]/10 border-l-4 border-[var(--teal-main)] p-4 text-left rounded-r-lg max-w-2xl mx-auto flex items-start gap-3">
+              <RiSettings3Line className="w-6 h-6 text-[var(--teal-main)] shrink-0 mt-0.5" />
+              <p className="text-sm font-bold text-[var(--navy-main)]">
+                Hey, just a heads up: you need to add your own API keys in the <button onClick={() => setIsSettingsOpen(true)} className="underline hover:text-[var(--orange-accent)] transition-colors">settings</button> (top right) to use this app. 
+                Don't worry, your keys are stored strictly in your browser's local storage. If you have trust issues like me, you can <a href="<github repo link>" target="_blank" rel="noreferrer" className="underline hover:text-[var(--orange-accent)] transition-colors">check the code here</a>.
+              </p>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="w-full">

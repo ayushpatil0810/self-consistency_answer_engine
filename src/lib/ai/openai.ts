@@ -1,20 +1,24 @@
 import OpenAI from "openai";
-import { ModelResponse } from "../types/models";
+import { ModelResponse, CustomConfig } from "../types/models";
 import { measureLatency } from "../utils/latency";
 import { withTimeout } from "../utils/timeout";
 
-const openaiClient = new OpenAI({
+const globalOpenaiClient = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || "dummy_key",
   baseURL: process.env.OPENAI_BASE_URL,
 });
 
-export async function generateOpenAIResponse(prompt: string): Promise<ModelResponse> {
-  const modelName = process.env.OPENAI_MODEL || "gpt-4o";
+export async function generateOpenAIResponse(prompt: string, config?: CustomConfig): Promise<ModelResponse> {
+  const modelName = config?.openaiModel || process.env.OPENAI_MODEL || "gpt-4o";
+
+  const client = config?.openaiKey 
+    ? new OpenAI({ apiKey: config.openaiKey, baseURL: config.openaiUrl || undefined })
+    : globalOpenaiClient;
 
   try {
     const { result, latency } = await measureLatency(() =>
       withTimeout(
-        openaiClient.chat.completions.create({
+        client.chat.completions.create({
           model: modelName,
           messages: [
             {

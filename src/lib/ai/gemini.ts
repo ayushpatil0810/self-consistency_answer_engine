@@ -1,20 +1,24 @@
 import OpenAI from "openai";
-import { ModelResponse } from "../types/models";
+import { ModelResponse, CustomConfig } from "../types/models";
 import { measureLatency } from "../utils/latency";
 import { withTimeout } from "../utils/timeout";
 
-const geminiClient = new OpenAI({
+const globalGeminiClient = new OpenAI({
   apiKey: process.env.GEMINI_API_KEY || "dummy_key",
   baseURL: process.env.GEMINI_BASE_URL,
 });
 
-export async function generateGeminiResponse(prompt: string): Promise<ModelResponse> {
-  const modelName = process.env.GEMINI_MODEL || "gemini-1.5-pro-latest";
+export async function generateGeminiResponse(prompt: string, config?: CustomConfig): Promise<ModelResponse> {
+  const modelName = config?.geminiModel || process.env.GEMINI_MODEL || "gemini-1.5-pro-latest";
+
+  const client = config?.geminiKey
+    ? new OpenAI({ apiKey: config.geminiKey, baseURL: config.geminiUrl || undefined })
+    : globalGeminiClient;
 
   try {
     const { result, latency } = await measureLatency(() =>
       withTimeout(
-        geminiClient.chat.completions.create({
+        client.chat.completions.create({
           model: modelName,
           messages: [
             {

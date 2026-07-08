@@ -37,11 +37,15 @@ CRITICAL INSTRUCTIONS:
 }
 
 export async function evaluateResponsesStream(request: EvaluationRequest) {
-  const modelName = process.env.CLAUDE_MODEL || "claude-3-5-sonnet-latest";
+  const modelName = request.config?.claudeModel || process.env.CLAUDE_MODEL || "claude-3-5-sonnet-latest";
 
   console.log(`[Claude] About to call evaluateResponsesStream with model: ${modelName}`);
 
-  const stream = await claudeClient.chat.completions.create({
+  const client = request.config?.claudeKey
+    ? new (require("openai").default)({ apiKey: request.config.claudeKey, baseURL: request.config.claudeUrl || undefined })
+    : claudeClient;
+
+  const stream = await client.chat.completions.create({
     model: modelName,
     messages: [
       {
