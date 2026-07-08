@@ -166,7 +166,7 @@ export default function Home() {
                     Add your API keys in the <button onClick={() => setIsSettingsOpen(true)} className="underline font-bold text-[var(--teal-main)] hover:text-[var(--orange-accent)] transition-colors">Settings</button> (top right) to use this app.
                   </li>
                   <li>
-                    <strong>Privacy First:</strong> Your keys are strictly stored in your browser's local storage. If you have trust issues like me, <a href="<github repo link>" target="_blank" rel="noreferrer" className="underline font-bold text-[var(--teal-main)] hover:text-[var(--orange-accent)] transition-colors">check the code here</a>.
+                    <strong>Privacy First:</strong> Your keys are strictly stored in your browser's local storage. If you have trust issues like me, <a href="https://github.com/ayushpatil0810/realfiesta" target="_blank" rel="noreferrer" className="underline font-bold text-[var(--teal-main)] hover:text-[var(--orange-accent)] transition-colors">check the code here</a>.
                   </li>
                   <li>
                     <strong>Complete Flexibility:</strong> It's not compulsory to use the actual models (OpenAI, Grok, etc.). Any OpenAI SDK-compatible API (like DeepSeek, Ollama, vLLM) will work perfectly fine. Just enter the compatible Base URL and Model name!
